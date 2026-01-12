@@ -1,5 +1,5 @@
+"use client";
 import { Button } from "@mui/material";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,8 +18,7 @@ export default function Home() {
               borderRadius: 2,
               px: 4,
               py: 1.5,
-            }}
-          >
+            }}>
             Dashboard
           </Button>
         </div>
