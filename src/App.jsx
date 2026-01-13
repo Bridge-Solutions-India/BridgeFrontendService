@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CardNav from './components/landing/CardNav.jsx';
 import Hero from './components/landing/Hero.jsx';
+import Footer from './components/landing/Footer.jsx';
 
 function App() {
     // Sample items for your CardNav (ensure these are passed so the menu isn't empty)
@@ -16,6 +17,7 @@ function App() {
             <main>
                 <Hero />
             </main>
+            <Footer />
         </div>
     );
 }
