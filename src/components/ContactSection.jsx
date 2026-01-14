@@ -87,7 +87,7 @@ const ContactSection = () => {
             setFormData({ name: "", email: "", phone: "", description: "" });
             setSubmitted(false);
         } catch (error) {
-            showToast(error?.response?.data?.message || "Something went wrong. Please try again.", "error");
+            showToast(err.message, "error");
             setFormData({ name: "", email: "", phone: "", description: "" });
         } finally {
             setLoading(false);
