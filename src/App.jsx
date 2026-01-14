@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CardNav from './components/landing/CardNav.jsx';
 import Hero from './components/landing/Hero.jsx';
+import ContactSection from "./components/ContactSection.jsx";
 import Footer from './components/landing/Footer.jsx';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <CardNav items={navItems} />
             <main>
                 <Hero />
+                <ContactSection />
             </main>
             <Footer />
         </div>
