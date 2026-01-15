@@ -10,12 +10,12 @@ function App() {
         { label: "Digital Marketing Services", bgColor: "#1e3a8a", textColor: "#F8FBFF", links: [
             {label: "Search Engine Marketing", href: "#searchEngineMarketing"}, 
             {label: "Social Media Marketing", href: "#socialMediaMarketing"}, 
-            {label: "Paid Marketing", href: "#paidMarketing"}
+            {label: "Targeted Outreach", href: "#targetedOutreach"}
         ] },
         { label: "Software Services", bgColor: "#1e40af", textColor: "#F8FBFF", links: [
             {label: "Web Development Solutions", href: "#webDev"}, 
             {label: "Digital Transformation Solutions", href: "#digtialTransform"},
-            {label: "Data Analytics Solutions", href: "#dataAnalytics"}
+            {label: "Business Analytics Solutions", href: "#businessAnalytics"}
         ] },
         { label: "Company", bgColor: "#1d4ed8", textColor: "#F8FBFF", links: [
             {label: "Who are We", href: "#teamBrdige"}, 

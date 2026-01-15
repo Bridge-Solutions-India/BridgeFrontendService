@@ -178,7 +178,7 @@ const CardNav = ({
               onMouseEnter={handleHover}
             >
               <FaPhoneAlt ref={phoneRef} />
-              <span className="hidden lg:inline ml-1">Free 1:1 Call</span>
+              <span className="hidden lg:inline ml-1 tracking-wide">Free 1:1 Call</span>
             </button>
           </div>
         </div>

@@ -96,7 +96,7 @@ const ContactSection = () => {
 
     return (
         <section className="py-16 bg-white">
-            <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <div id="contact" className="max-w-6xl mx-auto py-8 px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
                 {/* LEFT COLUMN */}
                 <div>
