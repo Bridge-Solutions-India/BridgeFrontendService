@@ -1,17 +1,15 @@
 import axios from "axios";
+import {APP_CONFIG} from "../config/app.config.js";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_BRIDGE_CONTACTFORM_API_KEY;
-
-if(!API_BASE_URL) {
+if(!APP_CONFIG.application.baseURL) {
     throw new Error("Base url is not defined");
 }
 
 export const httpClient = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: APP_CONFIG.application.baseURL,
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",
-        "bridgecontactform-api-key": API_KEY,
+        "bridgecontactform-api-key": APP_CONFIG.application.contactFormAPIKey,
     },
 });

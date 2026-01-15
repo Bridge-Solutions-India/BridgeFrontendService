@@ -1,9 +1,10 @@
 import { httpClient } from "./httpClient";
+import { APP_CONFIG } from "../config/app.config.js";
 
 export const submitContactForm = async (payload) => {
     try {
         const response = await httpClient.post(
-            "/bridgecontactform/register",
+            APP_CONFIG.apiRoutes.contactRegisterRoute,
             payload,
         );
 

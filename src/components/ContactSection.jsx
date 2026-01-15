@@ -82,12 +82,12 @@ const ContactSection = () => {
         setLoading(true);
 
         try {
-            const res = await submitContactForm(formData);
+             await submitContactForm(formData);
             showToast("Contact form Submitted Successfully", "success");
             setFormData({ name: "", email: "", phone: "", description: "" });
             setSubmitted(false);
         } catch (error) {
-            showToast(err.message, "error");
+            showToast(error.message, "error");
             setFormData({ name: "", email: "", phone: "", description: "" });
         } finally {
             setLoading(false);
