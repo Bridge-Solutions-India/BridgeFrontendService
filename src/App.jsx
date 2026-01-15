@@ -7,9 +7,21 @@ import Footer from './components/landing/Footer.jsx';
 function App() {
     // Sample items for your CardNav (ensure these are passed so the menu isn't empty)
     const navItems = [
-        { label: "Services", bgColor: "#1e3a8a", textColor: "#ffffff", links: [{label: "Consulting", href: "#"}, {label: "Tech", href: "#"}] },
-        { label: "Products", bgColor: "#1e40af", textColor: "#ffffff", links: [{label: "SaaS", href: "#"}, {label: "Mobile", href: "#"}] },
-        { label: "Contact", bgColor: "#1d4ed8", textColor: "#ffffff", links: [{label: "Team", href: "#"}, {label: "Story", href: "#"}] },
+        { label: "Digital Marketing Services", bgColor: "#1e3a8a", textColor: "#F8FBFF", links: [
+            {label: "Search Engine Marketing", href: "#searchEngineMarketing"}, 
+            {label: "Social Media Marketing", href: "#socialMediaMarketing"}, 
+            {label: "Paid Marketing", href: "#paidMarketing"}
+        ] },
+        { label: "Software Services", bgColor: "#1e40af", textColor: "#F8FBFF", links: [
+            {label: "Web Development Solutions", href: "#webDev"}, 
+            {label: "Digital Transformation Solutions", href: "#digtialTransform"},
+            {label: "Data Analytics Solutions", href: "#dataAnalytics"}
+        ] },
+        { label: "Company", bgColor: "#1d4ed8", textColor: "#F8FBFF", links: [
+            {label: "Who are We", href: "#teamBrdige"}, 
+            {label: "Our Mission", href: "#mission"},
+            {label: "Our Vision", href: "#vision"}
+        ] }
     ];
 
     return (

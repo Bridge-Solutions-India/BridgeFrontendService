@@ -36,44 +36,54 @@ const CardNav = ({
     );
   };
 
+  /**
+   * DYNAMIC HEIGHT CALCULATION
+   * Measures the actual rendered height of the content container
+   */
   const calculateHeight = () => {
     const navEl = navRef.current;
-    if (!navEl) return 300;
-
-    if (window.innerWidth > 768) return 320;
+    if (!navEl) return BASE_HEIGHT;
 
     const contentEl = navEl.querySelector(".card-nav-content");
-    if (!contentEl) return 300;
+    if (!contentEl) return BASE_HEIGHT;
 
+    // Temporarily reset styles to measure real height
     const prev = {
       visibility: contentEl.style.visibility,
       position: contentEl.style.position,
       display: contentEl.style.display,
+      height: contentEl.style.height
     };
 
     Object.assign(contentEl.style, {
-      visibility: "visible",
-      position: "static",
+      visibility: "hidden",
+      position: "absolute",
       display: "flex",
+      height: "auto"
     });
 
-    const height = BASE_HEIGHT + contentEl.scrollHeight + 20;
+    // Capture the height + padding offsets
+    const contentHeight = contentEl.offsetHeight;
 
+    // Restore original styles
     Object.assign(contentEl.style, prev);
-    return height;
+
+    // Return Base (header) + Content + Bottom Padding (24px)
+    return BASE_HEIGHT + contentHeight;
   };
 
   const createTimeline = () => {
     if (!navRef.current) return null;
 
+    // Initialize state
     gsap.set(navRef.current, { height: BASE_HEIGHT, overflow: "hidden" });
-    gsap.set(cardsRef.current, { y: 30, opacity: 0 });
+    gsap.set(cardsRef.current, { y: 20, opacity: 0 });
 
     const tl = gsap.timeline({ paused: true });
 
     tl.to(navRef.current, {
-      height: calculateHeight,
-      duration: 0.5,
+      height: () => calculateHeight(), // Use function call to get fresh value
+      duration: 0.6,
       ease,
     }).to(
       cardsRef.current,
@@ -82,9 +92,9 @@ const CardNav = ({
         opacity: 1,
         duration: 0.4,
         ease: "power2.out",
-        stagger: 0.1,
+        stagger: 0.08,
       },
-      "-=0.2"
+      "-=0.3"
     );
 
     return tl;
@@ -98,10 +108,18 @@ const CardNav = ({
   useLayoutEffect(() => {
     const onResize = () => {
       if (!tlRef.current) return;
-      const progress = tlRef.current.progress();
-      tlRef.current.kill();
-      tlRef.current = createTimeline();
-      if (isExpanded) tlRef.current.progress(progress || 1);
+      
+      // If menu is open during resize, we recalculate and snap to new height
+      if (isExpanded) {
+        gsap.to(navRef.current, {
+          height: calculateHeight(),
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      } else {
+        tlRef.current.kill();
+        tlRef.current = createTimeline();
+      }
     };
 
     window.addEventListener("resize", onResize);
@@ -125,101 +143,69 @@ const CardNav = ({
   };
 
   return (
-    <div
-      className={`fixed left-1/2 -translate-x-1/2 w-[92%] max-w-[1400px] z-[99] top-3 md:top-4 ${className} select-none caret-transparent`}
-    >
+    <div className={`fixed left-1/2 -translate-x-1/2 w-[92%] max-w-[1400px] z-[99] top-3 md:top-4 ${className} select-none`}>
       <nav
         ref={navRef}
-        className="block rounded-2xl shadow-2xl relative overflow-hidden backdrop-blur-sm select-none caret-transparent"
+        className="block rounded-3xl shadow-2xl relative overflow-hidden backdrop-blur-md transition-shadow duration-300"
         style={{ backgroundColor: baseColor }}
       >
         {/* Main Header Row */}
-        <div
-          className={`h-[80px] flex items-center justify-between px-6 md:px-10 text-[#F8FBFF] select-none caret-transparent`}
-        >
-          {/* Hamburger Menu Toggle */}
+        <div className="h-[80px] flex items-center justify-between px-6 md:px-10 text-[#F8FBFF]">
+          {/* Hamburger Toggle */}
           <div
             role="button"
             onClick={toggleMenu}
-            className="flex flex-col justify-center items-start gap-[5px] cursor-pointer group w-10 select-none caret-transparent"
+            className="flex flex-col justify-center items-start gap-[6px] cursor-pointer group w-10"
           >
-            <span
-              className={`h-[2px] bg-white transition-all duration-300 ${
-                isHamburgerOpen ? "w-7 translate-y-[7px] rotate-45" : "w-7"
-              }`}
-            />
-            <span
-              className={`h-[2px] bg-white transition-all duration-300 ${
-                isHamburgerOpen ? "opacity-0" : "w-5"
-              }`}
-            />
-            <span
-              className={`h-[2px] bg-white transition-all duration-300 ${
-                isHamburgerOpen ? "w-7 -translate-y-[7px] -rotate-45" : "w-7"
-              }`}
-            />
+            <span className={`h-[2px] bg-white transition-all duration-300 ${isHamburgerOpen ? "w-7 translate-y-[8px] rotate-45" : "w-7"}`} />
+            <span className={`h-[2px] bg-white transition-all duration-300 ${isHamburgerOpen ? "opacity-0" : "w-5"}`} />
+            <span className={`h-[2px] bg-white transition-all duration-300 ${isHamburgerOpen ? "w-7 -translate-y-[8px] -rotate-45" : "w-7"}`} />
           </div>
 
-          {/* Centered Logo & Branding */}
-          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 select-none caret-transparent">
-            <img
-              src={logoWhite}
-              alt={logoAlt}
-              className="h-10 md:h-12 w-auto object-contain"
-            />
-
-            {/* Text only visible on medium and larger screens */}
-            <div className="hidden md:flex flex-col leading-tight font-montserrat border-l border-white/20 pl-3 select-none caret-transparent">
-              <h1 className="text-xl md:text-2xl font-bold tracking-wide select-none caret-transparent">
-                BRIDGE
-              </h1>
-              <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-70 select-none caret-transparent">
-                Solutions
-              </p>
+          {/* Logo Branding */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
+            <img src={logoWhite} alt={logoAlt} className="h-10 md:h-12 w-auto object-contain" />
+            <div className="hidden md:flex flex-col leading-tight border-l border-white/20 pl-3">
+              <h1 className="text-xl md:text-2xl font-bold tracking-tight">BRIDGE</h1>
+              <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-60">Solutions</p>
             </div>
           </div>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <div className="flex items-center">
             <button
-              type="button"
-              className="cursor-pointer flex items-center justify-center gap-2 px-6 py-3 font-bold rounded-[10px] text-sm uppercase transition-all duration-300 select-none caret-transparent border-3 border-[#F8FBFF] bg-[#0F2854] text-[#F8FBFF] hover:bg-[#F8FBFF] hover:text-[#0F2854]"
+              className="group flex items-center justify-center gap-2 px-5 py-2.5 font-bold rounded-lg text-xs md:text-sm uppercase transition-all border-2 border-white/20 bg-white/10 hover:bg-white hover:text-[#0F2854] hover:cursor-pointer shadow-md"
               onMouseEnter={handleHover}
             >
-              <FaPhoneAlt ref={phoneRef} className="w-4 h-4" />
-              {/* Show text only on large screens */}
-              <span className="hidden lg:inline">FREE 1:1 CALL</span>
+              <FaPhoneAlt ref={phoneRef} />
+              <span className="hidden lg:inline ml-1">Free 1:1 Call</span>
             </button>
           </div>
         </div>
 
-        {/* Expanded Card Content */}
+        {/* Expanded Content: The source for dynamic height */}
         <div
-          className={`card-nav-content absolute inset-x-0 top-[80px] p-6 flex flex-col md:flex-row gap-4 select-none caret-transparent ${
-            isExpanded ? "pointer-events-auto" : "pointer-events-none"
+          className={`card-nav-content w-full p-6 md:p-8 flex flex-col md:flex-row gap-4 ${
+            isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
-          {(items || []).slice(0, 3).map((item, i) => (
+          {(items || []).map((item, i) => (
             <div
               key={i}
               ref={(el) => (cardsRef.current[i] = el)}
-              className="flex-1 rounded-xl p-6 transition-transform hover:-translate-y-1 shadow-sm flex flex-col justify-between min-h-[180px] select-none caret-transparent"
+              className="flex-1 rounded-2xl p-6 shadow-lg flex flex-col justify-between min-h-[200px]"
               style={{
-                backgroundColor: item.bgColor || "#1A3A6D",
+                backgroundColor: item.bgColor || "rgba(255,255,255,0.05)",
                 color: item.textColor || "#FFFFFF",
               }}
             >
-              <div>
-                <div className="text-2xl font-bold mb-4 select-none caret-transparent">
-                  {item.label}
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 select-none caret-transparent">
+              <div className="text-xl font-bold mb-6">{item.label}</div>
+              <div className="flex flex-col gap-3">
                 {item.links?.map((lnk, j) => (
                   <a
                     key={j}
                     href={lnk.href}
-                    className="flex items-center justify-between group text-sm font-medium opacity-90 hover:opacity-100 select-none caret-transparent"
+                    className="flex items-center justify-between group text-sm font-medium opacity-70 hover:opacity-100 transition-opacity"
                   >
                     {lnk.label}
                     <GoArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
