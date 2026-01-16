@@ -3,10 +3,9 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/BridgeFrontendService/",
+  base: "/",
   plugins: [
     react(),
     tailwindcss(),
   ],
-  envDir:'./src/sampleEnv'
 });
