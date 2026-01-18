@@ -12,5 +12,8 @@ export const APP_CONFIG = {
 
     apiRoutes:{
         contactRegisterRoute: "/bridgecontactform/register"
+    },
+    calendly:{
+        meeting: "https://calendly.com/contactbridgesolutions/new-meeting"
     }
 };

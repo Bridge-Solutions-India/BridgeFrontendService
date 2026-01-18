@@ -90,6 +90,13 @@ export default function Footer() {
             <button
               onMouseEnter={handleHover}
               className="bg-transparent border-2 border-[#1CD2FF] text-[#1CD2FF] hover:bg-[#1CD2FF] hover:text-[#031226] cursor-pointer px-6 py-3 rounded-md flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-[#1CD2FF]/30 text-sm font-semibold"
+              onClick={
+                () =>
+                    window.open(
+                        APP_CONFIG.calendly.meeting,
+                        "_blank"
+                    )
+              }
             >
               <FaPhoneAlt ref={phoneRef} className="h-4 w-4" />
               Schedule Call Now

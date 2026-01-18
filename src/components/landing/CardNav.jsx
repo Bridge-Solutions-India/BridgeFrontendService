@@ -1,3 +1,5 @@
+import {APP_CONFIG} from "../../config/app.config.js";
+
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
@@ -176,6 +178,13 @@ const CardNav = ({
             <button
               className="group flex items-center justify-center gap-2 px-5 py-2.5 font-bold rounded-lg text-xs md:text-sm uppercase transition-all border-2 border-white/20 bg-white/10 hover:bg-white hover:text-[#0F2854] hover:cursor-pointer shadow-md"
               onMouseEnter={handleHover}
+              onClick={
+              () =>
+                  window.open(
+                      APP_CONFIG.calendly.meeting,
+                      "_blank"
+                  )
+              }
             >
               <FaPhoneAlt ref={phoneRef} />
               <span className="hidden lg:inline ml-1 tracking-wide">Free 1:1 Call</span>

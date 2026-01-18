@@ -1,3 +1,5 @@
+import {APP_CONFIG} from "../../config/app.config.js";
+
 import React, { useRef } from "react";
 import { gsap } from "gsap";
 import heroBG from './../../assets/heroBG.png';
@@ -58,6 +60,13 @@ const Hero = () => {
             <button 
               onMouseEnter={handlePhoneHover}
               className="group flex items-center justify-center gap-2 px-6 py-4 bg-[#F8FBFF] text-[#0F2854] font-bold hover:cursor-pointer rounded-lg transition-colors duration-300 shadow-xl sm:w-72"
+              onClick={
+                  () =>
+                      window.open(
+                          APP_CONFIG.calendly.meeting,
+                          "_blank"
+                      )
+              }
             >
               <div ref={phoneIconRef} className="flex items-center justify-center">
                 <FaPhoneAlt className="text-sm" />
