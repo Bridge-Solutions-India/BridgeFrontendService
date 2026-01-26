@@ -41,7 +41,7 @@ export default function Footer() {
               />
               <div className="flex flex-col leading-tight font-montserrat border-l border-white/20 pl-3">
                 <h1 className="text-2xl font-bold tracking-wide">BRIDGE</h1>
-                <p className="text-xs tracking-[0.3em] uppercase opacity-70">
+                <p className="text-s tracking-[0.2em] opacity-70">
                   Solutions
                 </p>
               </div>

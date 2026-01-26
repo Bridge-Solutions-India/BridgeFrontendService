@@ -168,8 +168,8 @@ const CardNav = ({
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3">
             <img src={logoWhite} alt={logoAlt} className="h-10 md:h-12 w-auto object-contain" />
             <div className="hidden md:flex flex-col leading-tight border-l border-white/20 pl-3">
-              <h1 className="text-xl md:text-2xl font-bold tracking-tight">BRIDGE</h1>
-              <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-60">Solutions</p>
+              <h1 className="text-2xl font-bold tracking-wide">BRIDGE</h1>
+              <p className="text-s tracking-[0.2em] opacity-70">Solutions</p>
             </div>
           </div>
 
